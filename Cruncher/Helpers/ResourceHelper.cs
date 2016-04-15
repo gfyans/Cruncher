@@ -129,12 +129,19 @@ namespace Cruncher.Helpers
             // Cache item to ensure that checking whether the file exists is performed only every xx hours
             string cacheIdCheckFileExists = $"_CruncherCheckFileExists_{fileName}";
 
-            string fileVirtualPath = VirtualPathUtility.AppendTrailingSlash(CruncherConfiguration.Instance.PhysicalFilesPath) + fileName;
+            string fileVirtualPath =
+                VirtualPathUtility.AppendTrailingSlash(
+                    CruncherConfiguration.Instance.PhysicalFilesPath.Replace("{machinename}",
+                        NetworkHelper.FileSafeMachineName)) + fileName;
+
             string filePath = HostingEnvironment.MapPath(fileVirtualPath);
 
             // Trims the physical files folder ensuring that it does not contains files older than xx days 
             // This is performed before creating the physical resource file
-            await TrimPhysicalFilesFolderAsync(HostingEnvironment.MapPath(CruncherConfiguration.Instance.PhysicalFilesPath));
+            await
+                TrimPhysicalFilesFolderAsync(
+                    HostingEnvironment.MapPath(CruncherConfiguration.Instance.PhysicalFilesPath.Replace(
+                        "{machinename}", NetworkHelper.FileSafeMachineName)));
 
             // Check whether the resource file already exists
             if (filePath != null)
@@ -175,7 +182,7 @@ namespace Cruncher.Helpers
                     {
                         // The resource file doesn't exist 
                         // Make sure that the directory exists
-                        string directoryPath = HostingEnvironment.MapPath(CruncherConfiguration.Instance.PhysicalFilesPath);
+                        string directoryPath = HostingEnvironment.MapPath(CruncherConfiguration.Instance.PhysicalFilesPath.Replace("{machinename}", NetworkHelper.FileSafeMachineName));
                         if (directoryPath != null)
                         {
                             DirectoryInfo directoryInfo = new DirectoryInfo(directoryPath);

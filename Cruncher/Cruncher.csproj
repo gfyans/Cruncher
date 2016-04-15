@@ -83,6 +83,7 @@
     <Compile Include="Extensions\DirectoryInfoExtensions.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\AsyncDuplicateLock.cs" />
+    <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="JavaScriptCruncher.cs" />
     <Compile Include="Postprocessors\AutoPrefixer\AutoPrefixerOptions.cs" />

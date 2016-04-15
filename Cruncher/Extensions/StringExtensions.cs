@@ -70,5 +70,23 @@ namespace Cruncher.Extensions
 
             return Uri.TryCreate(expression, UriKind.Relative, out uri) && uri.IsWellFormedOriginalString();
         }
+
+        /// <summary>
+        /// Replaces the non-alphanumeric chars in a string with the given replacement.
+        /// </summary>
+        /// <param name="input">String to replace.</param>
+        /// <param name="replacement">The replacement string.</param>
+        /// <returns>The input string with non-alphanumeric characters replaced with the replacement string.</returns>
+        internal static string ReplaceNonAlphanumericChars(this string input, string replacement)
+        {
+            string mName = input;
+
+            foreach (char c in mName.ToCharArray().Where(c => !char.IsLetterOrDigit(c)))
+            {
+                mName = mName.Replace(c.ToString(CultureInfo.InvariantCulture), replacement);
+            }
+
+            return mName;
+        }
     }
 }
